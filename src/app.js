@@ -2,32 +2,36 @@ const express = require("express");
 
 const app = express();
 
-//the below callback function is known as route handler, app.use is known as the middleware
+//app.use("/route", rH, [rH2, rH3], rH4, rh5);
 
-app.get("/user", (req, res)=>{
-    res.send({fisrtName: "Amit", lastName: "Suman"})
-})
+app.get(
+  "/user",
+  (req, res, next) => {
+    console.log("Handling the route user!!");
+    next();
+  },
+  (req, res, next) => {
+    console.log("Handling the route user 2!!");
+    // res.send("2nd Response!!");
+    next();
+  },
 
-app.post("/user/:userId", (req, res)=>{ //dynamic params
-    console.log(req.params)
-    res.send("Data Successfully send to Database")
-})
+  (req, res, next) => {
+    console.log("Handling the route user 3!!");
+    // res.send("3rd Response!!");
+    next();
+  },
+  (req, res, next) => {
+    console.log("Handling the route user 4!!");
+    // res.send("4th Response!!");
+    next();
+  },
+  (req, res, next) => {
+    console.log("Handling the route user 5!!");
+    res.send("5th Response!!");
+  }
+);
 
-app.post("/user", (req, res)=>{
-    console.log(req.query)
-    res.send("Data Successfully send to Database")
-})
-
-app.delete("/user", (req, res)=>{
-    res.send("Data Successfully deleted to Database")
-})
-
-app.use("/test", (req, res)=>{
-    res.send("Hello from the test")
-})
-
-//app.listen takes port number and callback function as the parameter 
-app.listen(7777, ()=>{
-    console.log("Server is successfully listening on port 3000")
+app.listen(7777, () => {
+  console.log("Server is successfully listening on port 7777...");
 });
-
