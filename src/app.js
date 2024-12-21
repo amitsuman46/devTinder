@@ -8,7 +8,13 @@ app.get("/user", (req, res)=>{
     res.send({fisrtName: "Amit", lastName: "Suman"})
 })
 
+app.post("/user/:userId", (req, res)=>{ //dynamic params
+    console.log(req.params)
+    res.send("Data Successfully send to Database")
+})
+
 app.post("/user", (req, res)=>{
+    console.log(req.query)
     res.send("Data Successfully send to Database")
 })
 
