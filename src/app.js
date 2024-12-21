@@ -2,7 +2,7 @@ const express = require("express");
 
 const app = express();
 
-//the below callback function is known as request handler, app.use is known as the middleware
+//the below callback function is known as route handler, app.use is known as the middleware
 
 app.get("/user", (req, res)=>{
     res.send({fisrtName: "Amit", lastName: "Suman"})
