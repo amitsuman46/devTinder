@@ -19,10 +19,10 @@ app.get("/user", async (req, res) => {
   const userEmail = req.body.email;
   try {
     const fetchedUser = await User.find({ email: userEmail });
-    if(fetchedUser.length===0){
-      res.status(404).send("User Not Found")
+    if (fetchedUser.length === 0) {
+      res.status(404).send("User Not Found");
     }
-    res.send(fetchedUser)
+    res.send(fetchedUser);
   } catch (err) {
     res.status(400).send("Something Went Wrong");
   }
@@ -30,14 +30,37 @@ app.get("/user", async (req, res) => {
 
 //FEED API - Get all the user from the database
 app.get("/feed", async (req, res) => {
-  try{
+  try {
     const allUsers = await User.find({});
-    res.send(allUsers)
-  }catch(err){
+    res.send(allUsers);
+  } catch (err) {
     res.status(400).send("something went wrong");
   }
 });
 
+//delete the user based on _id
+app.delete("/user", async (req, res) => {
+  const userId = req.body.userId;
+  //findByIdAndDelete(id) is a shorthand for findOneAndDelete({ _id: id })
+  try {
+    const deletedUser = await User.findByIdAndDelete(userId);
+    res.send(deletedUser);
+  } catch (err) {
+    res.status(400).send("Something went Wrong");
+  }
+});
+
+//update the user
+app.patch("/user", async (req, res) => {
+  const userId = req.body.userId;
+  const data = req.body;
+  try {
+    const updatedUser = await User.findByIdAndUpdate(userId, data);
+    res.send("User Updated Successfully");
+  } catch (err) {
+    res.status(400).send("Something went Wrong");
+  }
+});
 
 connectDB()
   .then(() => {
