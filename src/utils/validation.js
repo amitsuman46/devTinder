@@ -20,4 +20,28 @@ const validateEditProfileData = (req) => {
 
     return isEditField;
 }
-module.exports = {validateSignUpData, validateEditProfileData}
+
+const validatePasswordChange = (req) => {
+    const { currentPassword,newPassword } = req.body;
+    const loggedInUser = req.user;
+    const userPassword = loggedInUser.password;
+    // Validate that both currentPassword and newPassword are provided
+    if (!newPassword || ! currentPassword) {
+      throw new Error("Both new and current passwords are required");
+    }
+    if(currentPassword!==userPassword){
+        throw new Error("Current Password is incorrect");
+    }
+    // Check if the current password matches the user's existing password
+    const isPasswordMatch = newPassword === userPassword;
+    if (isPasswordMatch) {
+      throw new Error("New password is equal to previous password");
+    }
+    if (!validator.isStrongPassword(newPassword)) {
+      throw new Error("New password is not a valid password");
+    }
+
+    else
+        return true
+}
+module.exports = {validateSignUpData, validateEditProfileData, validatePasswordChange}
