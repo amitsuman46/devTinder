@@ -12,8 +12,8 @@ authRouter
 ## connectionRequestRouter
 - POST /request/send/interested/:userID
 - POST /request/send/ignored/:userID
-- POST /request/send/accepted/:requestId
-- POST /request/send/rejected/:requestId
+- POST /request/review/accepted/:requestId
+- POST /request/review/rejected/:requestId
 
 ## userRouter
 - GET /user/connections
